@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Banco</h1>
+        <a href="prestamo">Inicio Aplicacion</a>
     </body>
 </html>
