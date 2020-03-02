@@ -14,14 +14,28 @@
     </head>
     <body>
         <h1>Banco Razvan</h1>
-		<p> Nombre <input type="text" name="nombre"></p>
-		<p> Cantidad que solicita <input type="text" name="cantidad"></p>
-		<p> Interes <input type="text" name="interes"></p>
-		<p> Tiempo(meses) <select>
-			<c:forEach items="${meses}" var= "mes">
-				<option>${mes}</option>
-		
-		</c:forEach>
-			</select></p>
+		<form action="prestamo" method="POST">
+
+
+			<p> Nombre <input type="text" name="nombre" value="${nombre}"></p>
+			<p> Cantidad que solicita <input type="text" name="cantidad" value="${cantidad}"></p>
+			<p> Interes <input type="text" name="interes" value="${interes}"></p>
+			<p> Tiempo(meses) <select name="tiempo">
+					<c:forEach items="${meses}" var= "mes">
+						<c:if test = "${mes == tiempo}">
+							<option  value="${mes}" selected >${mes}</option>
+						</c:if>
+						<c:if test = "${mes != tiempo}">
+							<option value="${mes}" >${mes}</option>
+						</c:if>
+
+					</c:forEach>
+				</select></p>
+			<input type="submit" value="Enviar">
+		</form>
+
+		<c:if test = "${prestamo != null}">
+			<h1>Importe total del Prestamo : ${prestamo}</h1>
+		</c:if>
     </body>
 </html>

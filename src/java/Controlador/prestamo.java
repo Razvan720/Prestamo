@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import Modelo.Prestamo;
 import Modelo.Utilidades;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,7 +39,7 @@ public class prestamo extends HttpServlet {
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
-			out.println("<title>Servlet prestamo</title>");			
+			out.println("<title>Servlet prestamo</title>");
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>Servlet prestamo at " + request.getContextPath() + "</h1>");
@@ -60,9 +61,9 @@ public class prestamo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArrayList<String> meses = Utilidades.getLista();
-		
+
 		request.setAttribute("meses", meses);
-        request.getRequestDispatcher("prestamo.jsp").forward(request, response);
+		request.getRequestDispatcher("prestamo.jsp").forward(request, response);
 	}
 
 	/**
@@ -76,7 +77,42 @@ public class prestamo extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		processRequest(request, response);
+		/*Recogemos los datos del formulario*/
+		String nombre = "Sin nombre";
+		double cantidad = 0;
+		double interes = 0;
+		int tiempo = Integer.parseInt(request.getParameter("tiempo"));
+
+		if (request.getParameter("nombre") != null) {
+			nombre = request.getParameter("nombre");
+		}
+		if (request.getParameter("cantidad") != null) {
+			cantidad = Double.parseDouble(request.getParameter("cantidad"));
+		}
+		if (request.getParameter("interes") != null) {
+			interes = Double.parseDouble(request.getParameter("interes"));
+		}
+
+		/*Creamos un objeto prestamo con los datos anteriores*/
+		Prestamo prestamo = new Prestamo(cantidad, interes, tiempo);
+		
+		String total = String.format("%.3f", prestamo.getImportePrestamo());
+
+		/*Ponemos los atributos*/
+		request.setAttribute("nombre", nombre);
+		request.setAttribute("interes", interes);
+		request.setAttribute("cantidad", cantidad);
+		request.setAttribute("tiempo", tiempo);
+		
+		request.setAttribute("prestamo", total);
+
+		/*Volvemos a crear la lista de meses*/
+		ArrayList<String> meses = Utilidades.getLista();
+		request.setAttribute("meses", meses);
+
+		/*Redirigimos al JSP*/
+		request.getRequestDispatcher("prestamo.jsp").forward(request, response);
+
 	}
 
 	/**
