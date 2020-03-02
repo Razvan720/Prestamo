@@ -35,7 +35,15 @@
 		</form>
 
 		<c:if test = "${prestamo != null}">
-			<h1>Importe total del Prestamo : ${prestamo}</h1>
+			<h1>Importe total del Prestamo : ${prestamo} €</h1>
+
+			<table border="1">
+				<tr><th>NºCuota</th><th>Importe</th><th>Capital</th><th>Interés</th>
+					<c:forEach items="${cuotas}" var= "cuota">
+					<tr><td>${cuota.getNumeroCuota()}</td><td>${ cuota.getImporteCouta()}</td><td>${cuota.getCapital()}</td><td>${cuota.getIntereses()}</td>
+					</c:forEach>
+			</table>
+
 		</c:if>
     </body>
 </html>

@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import Modelo.Cuota;
 import Modelo.Prestamo;
 import Modelo.Utilidades;
 import java.io.IOException;
@@ -109,6 +110,10 @@ public class prestamo extends HttpServlet {
 		/*Volvemos a crear la lista de meses*/
 		ArrayList<String> meses = Utilidades.getLista();
 		request.setAttribute("meses", meses);
+		
+		/*Creamos la tabla de cuotas*/
+		 ArrayList<Cuota> cuotas = Utilidades.generaListaCuotas(tiempo, prestamo.getImportePrestamo());
+		 request.setAttribute("cuotas", cuotas);
 
 		/*Redirigimos al JSP*/
 		request.getRequestDispatcher("prestamo.jsp").forward(request, response);
